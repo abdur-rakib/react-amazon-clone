@@ -1,0 +1,48 @@
+.category {
+  max-width: 1300px;
+  margin-top: -200px;
+  font-size: 1.6rem;
+}
+.single__category {
+  border-radius: 0 !important;
+  border: none !important;
+}
+.category__box {
+  padding: 8px 20px;
+  padding-bottom: 20px;
+}
+.category__title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: black;
+  margin-top: 10px;
+}
+
+.category__image {
+  width: 100%;
+  max-height: 210px;
+  margin-bottom: 11px;
+}
+
+.category__explore {
+  font-size: 1.3rem;
+}
+.category__explore:hover {
+  color: #ec9728;
+}
+
+@media screen and (max-width: 900px) {
+  .category {
+    margin-top: -150px;
+  }
+}
+@media screen and (max-width: 730px) {
+  .category {
+    margin-top: -100px;
+  }
+}
+@media screen and (max-width: 460px) {
+  .category {
+    margin-top: -70px;
+  }
+}

@@ -6,8 +6,11 @@ import login from "./pages/login";
 import signup from "./pages/signup";
 import checkout from "./pages/checkout";
 
+import fakeData from "../src/fakeData/index";
+
 class App extends Component {
   render() {
+    console.log(fakeData);
     return (
       <BrowserRouter>
         <div className="App">
