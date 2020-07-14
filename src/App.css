@@ -14,8 +14,7 @@ body::-webkit-scrollbar {
   display: none;
 }
 .App {
-  text-align: center;
-  background-color: lightgreen;
+  /* background-color: lightgreen; */
   min-height: 200vh;
 }
 .container-fluid {
