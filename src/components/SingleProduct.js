@@ -1,13 +1,16 @@
 import React from "react";
 import { AiTwotoneStar } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
-const SingleProduct = ({ prod }) => {
+const SingleProduct = ({ prod, cat }) => {
   return (
-    <div className="col-lg-4 card-group">
+    <div className="col-md-4 card-group">
       <div className="product card">
         <img src={prod.img} alt="" className="product__image img-fluid" />
         <div className="product__box">
-          <p className="product__title">{prod.name}</p>
+          <Link className="product__title" to={`/${cat}/${prod.key}`}>
+            <p>{prod.name}</p>
+          </Link>
           <p className="product__rating">
             {Array(prod.star)
               .fill()

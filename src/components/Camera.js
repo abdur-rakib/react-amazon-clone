@@ -16,14 +16,16 @@ const Camera = () => {
     camera.length === 0 ? (
       <p>Loading...</p>
     ) : (
-      camera.map((prod) => <SingleProduct key={prod.key} prod={prod} />)
+      camera.map((prod) => (
+        <SingleProduct cat="camera" key={prod.key} prod={prod} />
+      ))
     );
   return (
     <>
       <Header />
       <div className="minCategory d-flex align-items-center">
         <p>
-          Category <span className="text-primary"> "Camera"</span>
+          Category <span className="text-warning"> "Camera"</span>
         </p>
         <p>
           <Link to="/" className="text-secondary">

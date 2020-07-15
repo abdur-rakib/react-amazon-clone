@@ -16,15 +16,18 @@ const Android = () => {
     android.length === 0 ? (
       <p>Loading...</p>
     ) : (
-      android.map((prod) => <SingleProduct key={prod.key} prod={prod} />)
+      android.map((prod) => (
+        <SingleProduct cat="android" key={prod.key} prod={prod} />
+      ))
     );
+  // console.log(android);
   return (
     <>
       <Header />
 
       <div className="minCategory d-flex align-items-center">
         <p>
-          Category <span className="text-primary"> "Android"</span>
+          Category <span className="text-warning"> "Android"</span>
         </p>
         <p>
           <Link to="/" className="text-secondary">

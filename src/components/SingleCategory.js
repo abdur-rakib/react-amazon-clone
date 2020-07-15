@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const SingleCategory = (props) => {
   const { to, imageSrc, title } = props;
   return (
-    <div className="col-sm-4 col-xs-12">
+    <div className="col-sm-4 col-xs-12 card-group">
       <div className="single__category card">
         <div className="category__box">
           <p className="category__title">{title}</p>

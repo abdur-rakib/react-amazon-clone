@@ -9,6 +9,7 @@ import checkout from "./pages/checkout";
 import Android from "./components/Android";
 import Laptop from "./components/Laptop";
 import Camera from "./components/Camera";
+import ProductDetails from "./components/ProductDetails/ProductDetails";
 
 class App extends Component {
   render() {
@@ -24,6 +25,8 @@ class App extends Component {
             <Route exact path="/android" component={Android} />
             <Route exact path="/laptop" component={Laptop} />
             <Route exact path="/camera" component={Camera} />
+            {/* Product Details */}
+            <Route exact path="/:category/:id" component={ProductDetails} />
           </Switch>
         </div>
       </BrowserRouter>

@@ -16,14 +16,16 @@ const Laptop = () => {
     laptop.length === 0 ? (
       <p>Loading...</p>
     ) : (
-      laptop.map((prod) => <SingleProduct key={prod.key} prod={prod} />)
+      laptop.map((prod) => (
+        <SingleProduct cat="laptop" key={prod.key} prod={prod} />
+      ))
     );
   return (
     <>
       <Header />
       <div className="minCategory d-flex align-items-center">
         <p>
-          Category <span className="text-primary"> "Laptop"</span>
+          Category <span className="text-warning"> "Laptop"</span>
         </p>
         <p>
           <Link to="/" className="text-secondary">

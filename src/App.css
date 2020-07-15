@@ -71,3 +71,10 @@ body::-webkit-scrollbar {
   margin-left: 2rem;
   font-weight: bold;
 }
+.product__title {
+  color: black;
+}
+.product__title:hover {
+  color: #e67a00;
+  text-decoration: none;
+}
