@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
+import { useStateValue } from "../../context/StateProvider";
+
 const Header = () => {
+  const [state] = useStateValue();
+  const { basket } = state;
   return (
     <nav className=" header d-flex align-items-center">
       <Link to="/">
@@ -45,7 +49,7 @@ const Header = () => {
         <Link to="/checkout" className="header__link">
           <div className="header__optionBasket">
             <AiOutlineShoppingCart size={32} />
-            <span>0</span>
+            <span>{basket.length}</span>
           </div>
         </Link>
       </div>
