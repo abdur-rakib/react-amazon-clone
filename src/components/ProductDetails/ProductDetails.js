@@ -6,17 +6,30 @@ import { useState } from "react";
 import fakeData from "../../fakeData/index";
 import "./ProductDetails.css";
 import { AiTwotoneStar } from "react-icons/ai";
+import { useStateValue } from "../../context/StateProvider";
+import { ADD_TO_BASKET } from "../../context/types";
 
 const ProductDetails = (props) => {
   const [product, setProduct] = useState(null);
   const category = props.location.pathname.split("/")[1];
   const productId = props.location.pathname.split("/")[2];
+
+  const [state, dispatch] = useStateValue();
+
+  const addToBasket = () => {
+    console.log("Added");
+    dispatch({
+      type: ADD_TO_BASKET,
+      item: product,
+    });
+  };
+
   useEffect(() => {
     const prod = fakeData.filter((product) => product.key === productId)[0];
     setProduct(prod);
     // eslint-disable-next-line
   }, []);
-  console.log(product);
+  // console.log(product);
   const renderProductDetails =
     product === null ? (
       <p>Loading...</p>
@@ -42,7 +55,9 @@ const ProductDetails = (props) => {
                   ))}
               </select>
               {/* <br /> */}
-              <button className="cart__btn">Add to cart</button>
+              <button className="cart__btn" onClick={addToBasket}>
+                Add to cart
+              </button>
             </div>
           </div>
         </div>
