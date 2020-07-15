@@ -26,6 +26,7 @@
 
 .category__explore {
   font-size: 1.3rem;
+  color: black;
 }
 .category__explore:hover {
   color: #ec9728;

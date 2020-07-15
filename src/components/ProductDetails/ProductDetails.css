@@ -6,10 +6,29 @@
   background-color: white;
   padding: 40px 0;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  font-size: 1.6rem;
 }
 
 .price {
   font-size: 1.8rem;
   color: #e67a00;
   font-weight: bold;
+}
+.cart__btn {
+  background-color: #f0c14b;
+  border: 1px solid;
+  border-color: #a88734 #9c7e31 #846a29;
+  outline: none;
+  padding: 0 10px;
+  border-radius: 3px;
+  margin-left: 5px;
+  transition: all 0.3s;
+}
+
+.cart__btn:focus {
+  outline: none;
+  box-shadow: 0 0 3px 2px rgba(228, 121, 17, 0.5);
+}
+.cart__btn:hover {
+  background-color: #d17409;
 }

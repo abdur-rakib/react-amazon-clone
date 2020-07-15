@@ -9,7 +9,7 @@ const SingleProduct = ({ prod, cat }) => {
         <img src={prod.img} alt="" className="product__image img-fluid" />
         <div className="product__box">
           <Link className="product__title" to={`/${cat}/${prod.key}`}>
-            <p>{prod.name}</p>
+            <p style={{ lineHeight: "1.2" }}>{prod.name}</p>
           </Link>
           <p className="product__rating">
             {Array(prod.star)

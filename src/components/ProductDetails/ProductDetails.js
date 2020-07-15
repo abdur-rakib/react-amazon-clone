@@ -41,6 +41,8 @@ const ProductDetails = (props) => {
                     </option>
                   ))}
               </select>
+              {/* <br /> */}
+              <button className="cart__btn">Add to cart</button>
             </div>
           </div>
         </div>

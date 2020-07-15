@@ -8,13 +8,13 @@ html {
 }
 
 body {
-  font-family: "PT Sans", sans-serif !important;
+  font-family: "Inter", sans-serif !important;
 }
 body::-webkit-scrollbar {
   display: none;
 }
 .App {
-  background-color: rgb(238, 237, 237);
+  background-color: rgb(247, 247, 247);
   min-height: 100vh;
 }
 .container-fluid {
