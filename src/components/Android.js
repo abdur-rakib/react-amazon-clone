@@ -3,6 +3,14 @@ import Header from "./Header/Header";
 import fakeData from "../fakeData/index";
 import SingleProduct from "./SingleProduct";
 import { Link } from "react-router-dom";
+import HashLoader from "react-spinners/HashLoader";
+import { css } from "@emotion/core";
+
+const override = css`
+  display: block;
+  margin: 50px auto;
+  border-color: red;
+`;
 
 const Android = () => {
   const [android, setAndroid] = useState([]);
@@ -14,7 +22,7 @@ const Android = () => {
   }, []);
   const renderProducts =
     android.length === 0 ? (
-      <p>Loading...</p>
+      <HashLoader color="#e67a00" size={150} css={override} />
     ) : (
       android.map((prod) => (
         <SingleProduct cat="android" key={prod.key} prod={prod} />

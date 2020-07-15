@@ -78,3 +78,9 @@ body::-webkit-scrollbar {
   color: #e67a00;
   text-decoration: none;
 }
+
+.loader {
+  color: #e67a00;
+  top: 50%;
+  left: 50%;
+}
