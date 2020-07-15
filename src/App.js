@@ -6,11 +6,12 @@ import login from "./pages/login";
 import signup from "./pages/signup";
 import checkout from "./pages/checkout";
 
-import fakeData from "../src/fakeData/index";
+import Android from "./components/Android";
+import Laptop from "./components/Laptop";
+import Camera from "./components/Camera";
 
 class App extends Component {
   render() {
-    console.log(fakeData);
     return (
       <BrowserRouter>
         <div className="App">
@@ -19,6 +20,10 @@ class App extends Component {
             <Route exact path="/login" component={login} />
             <Route exact path="/signup" component={signup} />
             <Route exact path="/checkout" component={checkout} />
+            {/* Category Route */}
+            <Route exact path="/android" component={Android} />
+            <Route exact path="/laptop" component={Laptop} />
+            <Route exact path="/camera" component={Camera} />
           </Switch>
         </div>
       </BrowserRouter>
