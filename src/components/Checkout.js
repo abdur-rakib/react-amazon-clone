@@ -5,7 +5,7 @@ import { useStateValue } from "../context/StateProvider";
 import { db } from "../firebase/utils";
 
 const Checkout = (props) => {
-  const [state, dispatch] = useStateValue();
+  const [state] = useStateValue();
 
   const removeItem = (key) => {
     db.doc(`/cart/${key}`)

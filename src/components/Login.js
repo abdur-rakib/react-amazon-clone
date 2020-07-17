@@ -18,7 +18,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  const [state, dispatch] = useStateValue();
+  const [dispatch] = useStateValue();
 
   const handleChange = (e) => {
     if (e.target.name === "email") {

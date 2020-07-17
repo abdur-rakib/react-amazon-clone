@@ -20,7 +20,7 @@ const override = css`
 `;
 
 const ProductDetails = (props) => {
-  const [state, dispatch] = useStateValue();
+  const [dispatch] = useStateValue();
 
   const [product, setProduct] = useState(null);
   const category = props.location.pathname.split("/")[1];

@@ -1,6 +1,6 @@
 import React from "react";
 import "./Signup.css";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BsExclamation } from "react-icons/bs";
 import { auth } from "../../firebase/utils";
 import { useState } from "react";
@@ -21,7 +21,7 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  const [state, dispatch] = useStateValue();
+  const [dispatch] = useStateValue();
 
   const handleChange = (e) => {
     if (e.target.name === "email") {

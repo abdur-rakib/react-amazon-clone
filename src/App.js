@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import "./App.css";
 import home from "./pages/home";
@@ -39,6 +39,7 @@ const App = () => {
     });
     db.collection("cart").onSnapshot((snapshot) => {
       let cartItems = [];
+      // eslint-disable-next-line
       snapshot.docs.map((doc) => {
         cartItems.push(doc.data());
       });
@@ -49,6 +50,7 @@ const App = () => {
       });
       dispatch({ type: SET_CART_LENGTH, payload: sum });
     });
+    // eslint-disable-next-line
   }, []);
   return (
     <BrowserRouter>

@@ -7,7 +7,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useStateValue } from "../../context/StateProvider";
 
 const Header = () => {
-  const [state, dispatch] = useStateValue();
+  const [state] = useStateValue();
 
   return (
     <nav className=" header d-flex align-items-center">
