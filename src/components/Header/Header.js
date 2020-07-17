@@ -7,8 +7,8 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useStateValue } from "../../context/StateProvider";
 
 const Header = () => {
-  const [state] = useStateValue();
-  const { basket } = state;
+  const [state, dispatch] = useStateValue();
+
   return (
     <nav className=" header d-flex align-items-center">
       <Link to="/">
@@ -31,7 +31,11 @@ const Header = () => {
         <Link to="/login" className="header__link">
           <div className="header__option">
             <span className="header__optionLineOne">Hello</span>
-            <span className="header__optionLineTwo">Sign in</span>
+            {state.user ? (
+              <span className="header__optionLineTwo">{state.user.name}</span>
+            ) : (
+              <span className="header__optionLineTwo">Sign in</span>
+            )}
           </div>
         </Link>
         <Link to="/" className="header__link">
@@ -49,7 +53,7 @@ const Header = () => {
         <Link to="/checkout" className="header__link">
           <div className="header__optionBasket">
             <AiOutlineShoppingCart size={32} />
-            <span>{basket.length}</span>
+            <span>{state.cartLength}</span>
           </div>
         </Link>
       </div>

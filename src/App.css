@@ -58,7 +58,7 @@ body::-webkit-scrollbar {
   margin-top: -10px;
 }
 .product__price span {
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   color: rgba(0, 0, 0, 0.788);
 }
 .minCategory {
@@ -83,4 +83,26 @@ body::-webkit-scrollbar {
   color: #e67a00;
   top: 50%;
   left: 50%;
+}
+
+.cart {
+}
+.cart__item {
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+}
+.cart__image {
+  background-color: blue !important;
+}
+
+.cart__heading {
+  color: rgba(0, 0, 0, 0.897) !important;
+  font-weight: bold !important;
+}
+.cart__heading:hover {
+  color: #e67a00 !important;
+}
+
+small {
+  margin-bottom: -10px;
 }

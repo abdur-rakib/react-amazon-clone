@@ -3,7 +3,7 @@ import Header from "./Header/Header";
 import fakeData from "../fakeData/index";
 import SingleProduct from "./SingleProduct";
 import { Link } from "react-router-dom";
-import HashLoader from "react-spinners/HashLoader";
+import ClockLoader from "react-spinners/ClockLoader";
 import { css } from "@emotion/core";
 
 const override = css`
@@ -21,7 +21,7 @@ const Laptop = () => {
   }, []);
   const renderProducts =
     laptop.length === 0 ? (
-      <HashLoader color="#e67a00" size={150} css={override} />
+      <ClockLoader color="#e67a00" size={150} css={override} />
     ) : (
       laptop.map((prod) => (
         <SingleProduct cat="laptop" key={prod.key} prod={prod} />

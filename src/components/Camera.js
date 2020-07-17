@@ -3,7 +3,7 @@ import Header from "./Header/Header";
 import fakeData from "../fakeData/index";
 import SingleProduct from "./SingleProduct";
 import { Link } from "react-router-dom";
-import HashLoader from "react-spinners/HashLoader";
+import ClockLoader from "react-spinners/ClockLoader";
 import { css } from "@emotion/core";
 
 const override = css`
@@ -22,7 +22,7 @@ const Camera = () => {
   }, []);
   const renderProducts =
     camera.length === 0 ? (
-      <HashLoader color="#e67a00" size={150} css={override} />
+      <ClockLoader color="#e67a00" size={150} css={override} />
     ) : (
       camera.map((prod) => (
         <SingleProduct cat="camera" key={prod.key} prod={prod} />

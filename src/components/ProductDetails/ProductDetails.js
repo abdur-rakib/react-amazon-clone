@@ -9,19 +9,48 @@ import { AiTwotoneStar } from "react-icons/ai";
 import { useStateValue } from "../../context/StateProvider";
 import { ADD_TO_BASKET } from "../../context/types";
 
+import ClockLoader from "react-spinners/ClockLoader";
+import { css } from "@emotion/core";
+import { db } from "../../firebase/utils";
+
+const override = css`
+  display: block;
+  margin: 50px auto;
+  border-color: red;
+`;
+
 const ProductDetails = (props) => {
+  const [state, dispatch] = useStateValue();
+
   const [product, setProduct] = useState(null);
   const category = props.location.pathname.split("/")[1];
   const productId = props.location.pathname.split("/")[2];
 
-  const [state, dispatch] = useStateValue();
-
   const addToBasket = () => {
-    console.log("Added");
-    dispatch({
-      type: ADD_TO_BASKET,
-      item: product,
-    });
+    db.doc(`/cart/${product.key}`)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          // console.log(doc.data());
+          db.doc(`/cart/${product.key}`).update({
+            count: doc.data().count + 1,
+          });
+        } else {
+          db.collection("cart")
+            .doc(product.key)
+            .set({
+              ...product,
+              count: 1,
+            })
+            .then(() => {
+              dispatch({
+                type: ADD_TO_BASKET,
+                item: product,
+              });
+            })
+            .catch((err) => console.log(err));
+        }
+      });
   };
 
   useEffect(() => {
@@ -32,7 +61,7 @@ const ProductDetails = (props) => {
   // console.log(product);
   const renderProductDetails =
     product === null ? (
-      <p>Loading...</p>
+      <ClockLoader color="#e67a00" size={150} css={override} />
     ) : (
       <div className="row d-flex justify-content-center mt-5 productDetails pb-5">
         <div className="col-md-4 col-sm-10 ">
@@ -44,20 +73,26 @@ const ProductDetails = (props) => {
             />
             <div className="cart text-left ml-5 mt-4">
               <h4 className="text-success font-weight-bold">In Stock.</h4>
-              <select id="inputGroupSelect04">
-                <option defaultValue>1</option>
-                {Array(product.stock)
-                  .fill()
-                  .map((_, index) => (
-                    <option key={index} value={index}>
-                      {index}
-                    </option>
-                  ))}
-              </select>
-              {/* <br /> */}
-              <button className="cart__btn" onClick={addToBasket}>
-                Add to cart
-              </button>
+              <div className="d-flex">
+                <select
+                  id="inputGroupSelect04"
+                  style={{ fontSize: "1.4rem", width: "8.2rem" }}
+                  className="form-control"
+                >
+                  {/* <option defaultValue>1</option> */}
+                  {Array(product.stock)
+                    .fill()
+                    .map((_, index) => (
+                      <option key={index} value={index}>
+                        Qty: {index}
+                      </option>
+                    ))}
+                </select>
+                {/* <br /> */}
+                <button className="cart__btn" onClick={addToBasket}>
+                  Add to cart
+                </button>
+              </div>
             </div>
           </div>
         </div>

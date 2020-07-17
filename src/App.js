@@ -1,38 +1,88 @@
-import React, { Component } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import "./App.css";
 import home from "./pages/home";
-import signup from "./pages/signup/signup";
-import checkout from "./pages/checkout";
 
 import Android from "./components/Android";
 import Laptop from "./components/Laptop";
 import Camera from "./components/Camera";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
-import login from "./pages/login";
+import Login from "./components/Login";
+import Signup from "./components/Signup/Signup";
+import Checkout from "./components/Checkout";
+import { useStateValue } from "./context/StateProvider";
+import { useEffect } from "react";
+import { auth, db } from "./firebase/utils";
+import {
+  CREATE_USER,
+  SET_AUTHENTICATED,
+  SET_LOGOUT,
+  GET_CART,
+  SET_CART_LENGTH,
+} from "./context/types";
+import Profile from "./components/Profile/Profile";
 
-class App extends Component {
-  render() {
-    return (
-      <BrowserRouter>
-        <div className="App">
-          <Switch>
-            <Route exact path="/" component={home} />
+const App = () => {
+  const [state, dispatch] = useStateValue();
 
-            <Route exact path="/signup" component={signup} />
-            <Route exact path="/login" component={login} />
-            <Route exact path="/checkout" component={checkout} />
-            {/* Category Route */}
-            <Route exact path="/android" component={Android} />
-            <Route exact path="/laptop" component={Laptop} />
-            <Route exact path="/camera" component={Camera} />
-            {/* Product Details */}
-            <Route exact path="/:category/:id" component={ProductDetails} />
-          </Switch>
-        </div>
-      </BrowserRouter>
-    );
-  }
-}
+  useEffect(() => {
+    auth.onAuthStateChanged((userAuth) => {
+      if (userAuth) {
+        dispatch({
+          type: CREATE_USER,
+          user: { email: userAuth.email, name: userAuth.displayName },
+        });
+        dispatch({ type: SET_AUTHENTICATED });
+      } else {
+        dispatch({ type: SET_LOGOUT });
+      }
+    });
+    db.collection("cart").onSnapshot((snapshot) => {
+      let cartItems = [];
+      snapshot.docs.map((doc) => {
+        cartItems.push(doc.data());
+      });
+      dispatch({ type: GET_CART, payload: cartItems });
+      let sum = 0;
+      cartItems.forEach((item) => {
+        sum += item.count;
+      });
+      dispatch({ type: SET_CART_LENGTH, payload: sum });
+    });
+  }, []);
+  return (
+    <BrowserRouter>
+      <div className="App">
+        <Switch>
+          <Route exact path="/" component={home} />
+
+          <Route
+            exact
+            path="/signup"
+            render={() =>
+              state.authenticated ? <Redirect to="/" /> : <Signup />
+            }
+          />
+          <Route
+            exact
+            path="/login"
+            render={() =>
+              state.authenticated ? <Redirect to="/profile" /> : <Login />
+            }
+          />
+          <Route exact path="/checkout" component={Checkout} />
+          {/* Category Route */}
+          <Route exact path="/android" component={Android} />
+          <Route exact path="/laptop" component={Laptop} />
+          <Route exact path="/camera" component={Camera} />
+          {/* Product Details */}
+          <Route exact path="/:category/:id" component={ProductDetails} />
+
+          <Route exact path="/profile" component={Profile} />
+        </Switch>
+      </div>
+    </BrowserRouter>
+  );
+};
 
 export default App;
