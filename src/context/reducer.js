@@ -5,6 +5,8 @@ import {
   SET_LOGOUT,
   GET_CART,
   SET_CART_LENGTH,
+  CLEAR_LOADING,
+  SET_LOADING,
 } from "./types";
 
 export const initialState = {
@@ -12,6 +14,7 @@ export const initialState = {
   user: null,
   authenticated: false,
   cartLength: 0,
+  loading: false,
 };
 
 // reducer
@@ -50,6 +53,16 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         cartLength: action.payload,
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case CLEAR_LOADING:
+      return {
+        ...state,
+        loading: false,
       };
 
     default:

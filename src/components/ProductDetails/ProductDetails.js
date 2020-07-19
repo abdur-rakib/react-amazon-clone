@@ -7,11 +7,12 @@ import fakeData from "../../fakeData/index";
 import "./ProductDetails.css";
 import { AiTwotoneStar } from "react-icons/ai";
 import { useStateValue } from "../../context/StateProvider";
-import { ADD_TO_BASKET } from "../../context/types";
+import { ADD_TO_BASKET, SET_LOADING, CLEAR_LOADING } from "../../context/types";
 
 import ClockLoader from "react-spinners/ClockLoader";
 import { css } from "@emotion/core";
 import { db } from "../../firebase/utils";
+import Spinner from "react-bootstrap/Spinner";
 
 const override = css`
   display: block;
@@ -20,13 +21,14 @@ const override = css`
 `;
 
 const ProductDetails = (props) => {
-  const [dispatch] = useStateValue();
+  const [state, dispatch] = useStateValue();
 
   const [product, setProduct] = useState(null);
   const category = props.location.pathname.split("/")[1];
   const productId = props.location.pathname.split("/")[2];
 
   const addToBasket = () => {
+    dispatch({ type: SET_LOADING });
     db.doc(`/cart/${product.key}`)
       .get()
       .then((doc) => {
@@ -35,6 +37,7 @@ const ProductDetails = (props) => {
           db.doc(`/cart/${product.key}`).update({
             count: doc.data().count + 1,
           });
+          dispatch({ type: CLEAR_LOADING });
         } else {
           db.collection("cart")
             .doc(product.key)
@@ -43,12 +46,14 @@ const ProductDetails = (props) => {
               count: 1,
             })
             .then(() => {
+              dispatch({ type: CLEAR_LOADING });
               dispatch({
                 type: ADD_TO_BASKET,
                 item: product,
               });
             })
             .catch((err) => console.log(err));
+          dispatch({ type: CLEAR_LOADING });
         }
       });
   };
@@ -89,7 +94,19 @@ const ProductDetails = (props) => {
                     ))}
                 </select>
                 {/* <br /> */}
-                <button className="cart__btn" onClick={addToBasket}>
+                <button
+                  className="cart__btn"
+                  onClick={addToBasket}
+                  disabled={state.loading}
+                >
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="md"
+                    role="status"
+                    aria-hidden="true"
+                    hidden={!state.loading}
+                  />{" "}
                   Add to cart
                 </button>
               </div>

@@ -3,8 +3,14 @@ import { Link } from "react-router-dom";
 import { useStateValue } from "../context/StateProvider";
 import { BsExclamation } from "react-icons/bs";
 import { auth } from "../firebase/utils";
-import { SET_AUTHENTICATED, CREATE_USER } from "../context/types";
+import {
+  SET_AUTHENTICATED,
+  CREATE_USER,
+  SET_LOADING,
+  CLEAR_LOADING,
+} from "../context/types";
 import { useEffect } from "react";
+import Spinner from "react-bootstrap/Spinner";
 
 const checkError = (text) => {
   if (text.trim() === "") {
@@ -18,7 +24,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  const [dispatch] = useStateValue();
+  const [state, dispatch] = useStateValue();
 
   const handleChange = (e) => {
     if (e.target.name === "email") {
@@ -33,6 +39,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch({ type: SET_LOADING });
     setErrors({});
     const myErrors = [];
     if (checkError(email)) {
@@ -56,15 +63,16 @@ const Login = () => {
         dispatch({
           type: SET_AUTHENTICATED,
         });
+        dispatch({ type: CLEAR_LOADING });
       })
       .catch((err) => {
+        dispatch({ type: CLEAR_LOADING });
         if (err.code === "auth/wrong-password") {
           myErrors.password = err.message;
           setErrors(myErrors);
         }
       });
   };
-  console.log(errors);
   return (
     <div className="col-10 col-md-5 mx-auto signup text-center">
       <Link to="/" className="">
@@ -126,7 +134,18 @@ const Login = () => {
             )}
           </div>
 
-          <button className="submitBtn">Sign-in</button>
+          <button className="submitBtn" disabled={state.loading}>
+            {" "}
+            <Spinner
+              as="span"
+              animation="border"
+              size="md"
+              role="status"
+              aria-hidden="true"
+              hidden={!state.loading}
+            />{" "}
+            Sign-in
+          </button>
         </form>
         <small>
           By creating an account, you agree to Amazon's{" "}

@@ -4,8 +4,14 @@ import { Link } from "react-router-dom";
 import { BsExclamation } from "react-icons/bs";
 import { auth } from "../../firebase/utils";
 import { useState } from "react";
-import { CREATE_USER, SET_AUTHENTICATED } from "../../context/types";
+import {
+  CREATE_USER,
+  SET_AUTHENTICATED,
+  SET_LOADING,
+  CLEAR_LOADING,
+} from "../../context/types";
 import { useStateValue } from "../../context/StateProvider";
+import Spinner from "react-bootstrap/Spinner";
 
 const checkError = (text) => {
   if (text.trim() === "") {
@@ -21,7 +27,7 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  const [dispatch] = useStateValue();
+  const [state, dispatch] = useStateValue();
 
   const handleChange = (e) => {
     if (e.target.name === "email") {
@@ -39,6 +45,7 @@ const Signup = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch({ type: SET_LOADING });
     setErrors({});
     const errors = [];
     if (checkError(email)) {
@@ -75,9 +82,11 @@ const Signup = () => {
             dispatch({
               type: SET_AUTHENTICATED,
             });
+            dispatch({ type: CLEAR_LOADING });
           });
       })
       .catch((err) => {
+        dispatch({ type: CLEAR_LOADING });
         if (err.code === "auth/invalid-email") {
           errors.email = err.message;
           setErrors(errors);
@@ -205,7 +214,17 @@ const Signup = () => {
               </small>
             )}
           </div>
-          <button className="submitBtn">Create your Amazon account</button>
+          <button className="submitBtn" disabled={state.loading}>
+            <Spinner
+              as="span"
+              animation="border"
+              size="md"
+              role="status"
+              aria-hidden="true"
+              hidden={!state.loading}
+            />{" "}
+            Create your Amazon account
+          </button>
         </form>
         <small>
           By creating an account, you agree to Amazon's{" "}
