@@ -85,10 +85,11 @@ body::-webkit-scrollbar {
   left: 50%;
 }
 
-.cart {
+.cart__items {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  padding-bottom: 10px;
 }
-.cart__item {
-  border-top: 1px solid lightgray;
+.cart__item:not(:last-child) {
   border-bottom: 1px solid lightgray;
 }
 .cart__image {
@@ -105,4 +106,16 @@ body::-webkit-scrollbar {
 
 small {
   margin-bottom: -10px;
+}
+
+.btn:focus,
+.btn:active {
+  box-shadow: none !important;
+}
+
+.btn__plus:hover {
+  color: #e67a00;
+}
+.delete__image {
+  width: 19px;
 }

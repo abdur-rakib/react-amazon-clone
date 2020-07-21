@@ -22,9 +22,11 @@ export const initialState = {
 function reducer(state = initialState, action) {
   switch (action.type) {
     case ADD_TO_BASKET:
+      console.log(action.payload);
       return {
         ...state,
-        basket: [...state.basket, action.item],
+        // basket: state.basket.push(action.payload),
+        basket: [...state.basket, action.payload],
       };
     case CREATE_USER:
       return {

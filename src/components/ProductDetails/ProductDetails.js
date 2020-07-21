@@ -39,8 +39,8 @@ const ProductDetails = (props) => {
           });
           dispatch({ type: CLEAR_LOADING });
         } else {
-          db.collection("cart")
-            .doc(product.key)
+          // console.log("added");
+          db.doc(`/cart/${product.key}`)
             .set({
               ...product,
               count: 1,
@@ -49,12 +49,14 @@ const ProductDetails = (props) => {
               dispatch({ type: CLEAR_LOADING });
               dispatch({
                 type: ADD_TO_BASKET,
-                item: product,
+                payload: product,
               });
-            })
-            .catch((err) => console.log(err));
-          dispatch({ type: CLEAR_LOADING });
+            });
         }
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({ type: CLEAR_LOADING });
       });
   };
 
@@ -79,20 +81,6 @@ const ProductDetails = (props) => {
             <div className="cart text-left ml-5 mt-4">
               <h4 className="text-success font-weight-bold">In Stock.</h4>
               <div className="d-flex">
-                <select
-                  id="inputGroupSelect04"
-                  style={{ fontSize: "1.4rem", width: "8.2rem" }}
-                  className="form-control"
-                >
-                  {/* <option defaultValue>1</option> */}
-                  {Array(product.stock)
-                    .fill()
-                    .map((_, index) => (
-                      <option key={index} value={index}>
-                        Qty: {index}
-                      </option>
-                    ))}
-                </select>
                 {/* <br /> */}
                 <button
                   className="cart__btn"

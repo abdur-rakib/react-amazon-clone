@@ -3,9 +3,12 @@ import Header from "../components/Header/Header";
 import { Link } from "react-router-dom";
 import { useStateValue } from "../context/StateProvider";
 import { db } from "../firebase/utils";
-
+import { FaPlus, FaMinus } from "react-icons/fa";
+import { SET_LOADING, CLEAR_LOADING } from "../context/types";
+import CheckoutSummary from "./CheckoutSummary";
 const Checkout = (props) => {
-  const [state] = useStateValue();
+  const [state, dispatch] = useStateValue();
+  // console.log(state.basket);
 
   const removeItem = (key) => {
     db.doc(`/cart/${key}`)
@@ -14,57 +17,116 @@ const Checkout = (props) => {
         console.log("Removed successfully");
       });
   };
+  const increasItem = (id) => {
+    dispatch({ type: SET_LOADING });
+    db.doc(`/cart/${id}`)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          // console.log(doc.data());
+          db.doc(`/cart/${id}`).update({
+            count: doc.data().count + 1,
+          });
+          dispatch({ type: CLEAR_LOADING });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({ type: CLEAR_LOADING });
+      });
+  };
+  const decreaseItem = (id) => {
+    dispatch({ type: SET_LOADING });
+    db.doc(`/cart/${id}`)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          // console.log(doc.data());
+          if (doc.data().count === 1) {
+            removeItem(id);
+          }
+          db.doc(`/cart/${id}`).update({
+            count: doc.data().count - 1,
+          });
+          dispatch({ type: CLEAR_LOADING });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({ type: CLEAR_LOADING });
+      });
+  };
   const renderCartItems =
     state.basket.length === 0 ? (
       <h1 className="mb-3 font-weight-bold text-center">Your Cart is empty</h1>
     ) : (
       <>
         <h1 className="mb-3 font-weight-bold">Your shopping cart</h1>
-        <div className="cart__items">
-          {state.basket.map((item) => (
-            <div
-              key={item.key}
-              className="cart__item d-flex justify-content-between"
-            >
-              <div className="col-sm-4">
-                <img src={item.img} alt="" className="img-fluid cart__image" />
-              </div>
-              <div className="cart__details col-sm-8 py-3">
-                <Link className=" cart__heading" to="/">
-                  <h4 className="font-weight-bold">{item.name}</h4>
-                </Link>
-                <p className="price">
-                  <span className="text-secondary">Price</span>: $ {item.price}
-                </p>
-                <div className="d-flex">
-                  <select
-                    id="inputGroupSelect04"
-                    style={{ fontSize: "1.4rem", width: "8.2rem" }}
-                    className="form-control"
+        <div className="row">
+          <div className="cart__items bg-white col-md-7">
+            {state.basket.map((item) => (
+              <div
+                key={item.key}
+                className="cart__item d-flex justify-content-between"
+              >
+                <div className="col-2 d-flex py-5">
+                  <img
+                    src={item.img}
+                    alt=""
+                    className="img-fluid cart__image"
+                  />
+                </div>
+                <div className="cart__details col-sm-10 my-auto">
+                  <Link
+                    className=" cart__heading"
+                    to={`/${item.category}/${item.key}`}
                   >
-                    {/* <option defaultValue>1</option> */}
-                    {Array(item.stock)
-                      .fill()
-                      .map((_, index) => (
-                        <option
-                          key={index}
-                          value={index}
-                          style={{ fontSize: "1.5rem" }}
-                        >
-                          Qty: {index}
-                        </option>
-                      ))}
-                  </select>
-                  <button
-                    className="btn btn-danger ml-2"
-                    onClick={() => removeItem(item.key)}
-                  >
-                    Remove from cart
-                  </button>
+                    <h5 className="font-weight-bold">{item.name}</h5>
+                  </Link>
+                  <p className="price mb-0">
+                    <span className="text-secondary">Price</span>: ${" "}
+                    {(item.price * item.count).toFixed(2)}
+                  </p>
+                  <div className="d-flex mt-0">
+                    <div className="cart__product d-flex">
+                      <button
+                        disabled={state.loading}
+                        className="btn btn-lg btn__minus"
+                        onClick={() => decreaseItem(item.key)}
+                      >
+                        <FaMinus />
+                      </button>
+                      <h4 className="h4 pt-3">{item.count}</h4>
+                      <button
+                        disabled={state.loading}
+                        className="btn btn-lg btn__plus"
+                        onClick={() => increasItem(item.key)}
+                      >
+                        <FaPlus />
+                      </button>
+                    </div>
+                    <button
+                      className="btn"
+                      onClick={() => removeItem(item.key)}
+                    >
+                      {/* <AiOutlineDelete color="red" size={16} /> */}
+                      <img
+                        className="delete__image"
+                        src="https://image.flaticon.com/icons/svg/3096/3096673.svg"
+                        alt=""
+                      />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+          <div
+            className="col-md-4 cart__items bg-white ml-lg-4 ml-md-4 ml-sm-0"
+            style={{ height: "200px" }}
+          >
+            <CheckoutSummary basket={state.basket} />
+          </div>
         </div>
       </>
     );
