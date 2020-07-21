@@ -8,7 +8,6 @@ import { SET_LOADING, CLEAR_LOADING } from "../context/types";
 import CheckoutSummary from "./CheckoutSummary";
 const Checkout = (props) => {
   const [state, dispatch] = useStateValue();
-  // console.log(state.basket);
 
   const removeItem = (key) => {
     db.doc(`/cart/${key}`)
@@ -62,7 +61,7 @@ const Checkout = (props) => {
     ) : (
       <>
         <h1 className="mb-3 font-weight-bold">Your shopping cart</h1>
-        <div className="row">
+        <div className="row ">
           <div className="cart__items bg-white col-md-7">
             {state.basket.map((item) => (
               <div
@@ -123,9 +122,17 @@ const Checkout = (props) => {
           </div>
           <div
             className="col-md-4 cart__items bg-white ml-lg-4 ml-md-4 ml-sm-0"
-            style={{ height: "200px" }}
+            style={{ height: "210px" }}
           >
             <CheckoutSummary basket={state.basket} />
+            <div className="mt-2 text-center">
+              <button
+                style={{ fontSize: "1.5rem" }}
+                className="cart__btn px-5 py-3"
+              >
+                Go to shipping
+              </button>
+            </div>
           </div>
         </div>
       </>

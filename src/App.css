@@ -119,3 +119,10 @@ small {
 .delete__image {
   width: 19px;
 }
+
+.message {
+  background-color: green;
+  border-radius: 3px;
+  padding: 3px;
+  color: white;
+}

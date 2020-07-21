@@ -22,7 +22,7 @@ export const initialState = {
 function reducer(state = initialState, action) {
   switch (action.type) {
     case ADD_TO_BASKET:
-      console.log(action.payload);
+      console.log(state.basket);
       return {
         ...state,
         // basket: state.basket.push(action.payload),

@@ -7,7 +7,7 @@ import fakeData from "../../fakeData/index";
 import "./ProductDetails.css";
 import { AiTwotoneStar } from "react-icons/ai";
 import { useStateValue } from "../../context/StateProvider";
-import { ADD_TO_BASKET, SET_LOADING, CLEAR_LOADING } from "../../context/types";
+import { SET_LOADING, CLEAR_LOADING } from "../../context/types";
 
 import ClockLoader from "react-spinners/ClockLoader";
 import { css } from "@emotion/core";
@@ -22,6 +22,7 @@ const override = css`
 
 const ProductDetails = (props) => {
   const [state, dispatch] = useStateValue();
+  const [message, setMessage] = useState(false);
 
   const [product, setProduct] = useState(null);
   const category = props.location.pathname.split("/")[1];
@@ -32,6 +33,10 @@ const ProductDetails = (props) => {
     db.doc(`/cart/${product.key}`)
       .get()
       .then((doc) => {
+        setMessage(true);
+        setTimeout(() => {
+          setMessage(false);
+        }, 600);
         if (doc.exists) {
           // console.log(doc.data());
           db.doc(`/cart/${product.key}`).update({
@@ -47,10 +52,10 @@ const ProductDetails = (props) => {
             })
             .then(() => {
               dispatch({ type: CLEAR_LOADING });
-              dispatch({
-                type: ADD_TO_BASKET,
-                payload: product,
-              });
+              // dispatch({
+              //   type: ADD_TO_BASKET,
+              //   payload: { ...product, count: 1 },
+              // });
             });
         }
       })
@@ -80,7 +85,7 @@ const ProductDetails = (props) => {
             />
             <div className="cart text-left ml-5 mt-4">
               <h4 className="text-success font-weight-bold">In Stock.</h4>
-              <div className="d-flex">
+              <div className="">
                 {/* <br /> */}
                 <button
                   className="cart__btn"
@@ -97,6 +102,7 @@ const ProductDetails = (props) => {
                   />{" "}
                   Add to cart
                 </button>
+                {message && <span className="ml-2 message">Added</span>}
               </div>
             </div>
           </div>
