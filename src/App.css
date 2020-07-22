@@ -126,3 +126,10 @@ small {
   padding: 3px;
   color: white;
 }
+
+.modal-content {
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  margin-top: 90px;
+}

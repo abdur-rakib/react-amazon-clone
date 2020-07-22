@@ -50,6 +50,7 @@ const App = () => {
       });
       dispatch({ type: SET_CART_LENGTH, payload: sum });
     });
+    console.log("App render");
     // eslint-disable-next-line
   }, []);
   return (

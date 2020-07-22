@@ -62,73 +62,75 @@ const Checkout = (props) => {
       <>
         <h1 className="mb-3 font-weight-bold">Your shopping cart</h1>
         <div className="row ">
-          <div className="cart__items bg-white col-md-7">
-            {state.basket.map((item) => (
-              <div
-                key={item.key}
-                className="cart__item d-flex justify-content-between"
-              >
-                <div className="col-2 d-flex py-5">
-                  <img
-                    src={item.img}
-                    alt=""
-                    className="img-fluid cart__image"
-                  />
-                </div>
-                <div className="cart__details col-sm-10 my-auto">
-                  <Link
-                    className=" cart__heading"
-                    to={`/${item.category}/${item.key}`}
-                  >
-                    <h5 className="font-weight-bold">{item.name}</h5>
-                  </Link>
-                  <p className="price mb-0">
-                    <span className="text-secondary">Price</span>: ${" "}
-                    {(item.price * item.count).toFixed(2)}
-                  </p>
-                  <div className="d-flex mt-0">
-                    <div className="cart__product d-flex">
+          <div className="col-md-7">
+            <div className="cart__items bg-white ">
+              {state.basket.map((item) => (
+                <div
+                  key={item.key}
+                  className="cart__item d-flex justify-content-between"
+                >
+                  <div className="col-2 d-flex py-5">
+                    <img
+                      src={item.img}
+                      alt=""
+                      className="img-fluid cart__image"
+                    />
+                  </div>
+                  <div className="cart__details col-sm-10 my-auto">
+                    <Link
+                      className=" cart__heading"
+                      to={`/${item.category}/${item.key}`}
+                    >
+                      <h5 className="font-weight-bold">{item.name}</h5>
+                    </Link>
+                    <p className="price mb-0">
+                      <span className="text-secondary">Price</span>: ${" "}
+                      {(item.price * item.count).toFixed(2)}
+                    </p>
+                    <div className="d-flex mt-0">
+                      <div className="cart__product d-flex">
+                        <button
+                          disabled={state.loading}
+                          className="btn btn-lg btn__minus"
+                          onClick={() => decreaseItem(item.key)}
+                        >
+                          <FaMinus />
+                        </button>
+                        <h4 className="h4 pt-3">{item.count}</h4>
+                        <button
+                          disabled={state.loading}
+                          className="btn btn-lg btn__plus"
+                          onClick={() => increasItem(item.key)}
+                        >
+                          <FaPlus />
+                        </button>
+                      </div>
                       <button
-                        disabled={state.loading}
-                        className="btn btn-lg btn__minus"
-                        onClick={() => decreaseItem(item.key)}
+                        className="btn"
+                        onClick={() => removeItem(item.key)}
                       >
-                        <FaMinus />
-                      </button>
-                      <h4 className="h4 pt-3">{item.count}</h4>
-                      <button
-                        disabled={state.loading}
-                        className="btn btn-lg btn__plus"
-                        onClick={() => increasItem(item.key)}
-                      >
-                        <FaPlus />
+                        {/* <AiOutlineDelete color="red" size={16} /> */}
+                        <img
+                          className="delete__image"
+                          src="https://image.flaticon.com/icons/svg/3096/3096673.svg"
+                          alt=""
+                        />
                       </button>
                     </div>
-                    <button
-                      className="btn"
-                      onClick={() => removeItem(item.key)}
-                    >
-                      {/* <AiOutlineDelete color="red" size={16} /> */}
-                      <img
-                        className="delete__image"
-                        src="https://image.flaticon.com/icons/svg/3096/3096673.svg"
-                        alt=""
-                      />
-                    </button>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
           <div
             className="col-md-4 cart__items bg-white ml-lg-4 ml-md-4 ml-sm-0"
-            style={{ height: "210px" }}
+            style={{ height: "230px" }}
           >
             <CheckoutSummary basket={state.basket} />
             <div className="mt-2 text-center">
               <button
                 style={{ fontSize: "1.5rem" }}
-                className="cart__btn px-5 py-3"
+                className="cart__btn mt-5 px-5 py-3"
               >
                 Go to shipping
               </button>
