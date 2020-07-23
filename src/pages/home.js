@@ -2,8 +2,11 @@ import React from "react";
 import Header from "../components/Header/Header";
 import Banner from "../components/Banner/Banner";
 import CategorySection from "../components/CategorySection/CategorySection";
+// import { useStateValue } from "../context/StateProvider";
 
-const home = () => {
+const Home = () => {
+  // const [state, dispatch] = useStateValue();
+  // console.log(state.search);
   return (
     <>
       <Header />
@@ -15,4 +18,4 @@ const home = () => {
   );
 };
 
-export default home;
+export default Home;

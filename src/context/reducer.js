@@ -7,6 +7,7 @@ import {
   SET_CART_LENGTH,
   CLEAR_LOADING,
   SET_LOADING,
+  SET_SEARCHTEXT,
 } from "./types";
 
 export const initialState = {
@@ -15,6 +16,7 @@ export const initialState = {
   authenticated: false,
   cartLength: 0,
   loading: false,
+  search: "",
 };
 
 // reducer
@@ -22,10 +24,8 @@ export const initialState = {
 function reducer(state = initialState, action) {
   switch (action.type) {
     case ADD_TO_BASKET:
-      console.log(state.basket);
       return {
         ...state,
-        // basket: state.basket.push(action.payload),
         basket: [...state.basket, action.payload],
       };
     case CREATE_USER:
@@ -66,7 +66,11 @@ function reducer(state = initialState, action) {
         ...state,
         loading: false,
       };
-
+    case SET_SEARCHTEXT:
+      return {
+        ...state,
+        search: action.payload,
+      };
     default:
       return state;
   }

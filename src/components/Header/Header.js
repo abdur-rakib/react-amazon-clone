@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
 import { useStateValue } from "../../context/StateProvider";
+import { SET_SEARCHTEXT } from "../../context/types";
 
 const Header = () => {
-  const [state] = useStateValue();
-
+  const [state, dispatch] = useStateValue();
+  const [search, setSearch] = useState("");
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+  };
+  const handleSubmit = (e) => {
+    dispatch({ type: SET_SEARCHTEXT, payload: search });
+    e.preventDefault();
+  };
   return (
     <nav className=" header d-flex align-items-center">
       <Link to="/">
@@ -18,15 +26,22 @@ const Header = () => {
           alt=""
         ></img>
       </Link>
-      <div className="header__search">
+      <form
+        className="header__search d-flex align-items-center"
+        onSubmit={handleSubmit}
+      >
         <input
           className="header__searchText"
           type="search"
           placeholder="Search"
           aria-label="Search"
+          name="search"
+          onChange={handleChange}
         ></input>
-        <BsSearch size={40} className="header__searchIcon" />
-      </div>
+        <button className="btn search__btn">
+          <BsSearch size={40} className="header__searchIcon" />
+        </button>
+      </form>
       <div className="header__nav">
         <Link to="/login" className="header__link">
           <div className="header__option">

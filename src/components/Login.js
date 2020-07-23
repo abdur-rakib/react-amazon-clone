@@ -12,12 +12,12 @@ import {
 import { useEffect } from "react";
 import Spinner from "react-bootstrap/Spinner";
 
-const checkError = (text) => {
-  if (text.trim() === "") {
-    return true;
-  }
-  return false;
-};
+// const checkError = (text) => {
+//   if (text.trim() === "") {
+//     return true;
+//   }
+//   return false;
+// };
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -25,6 +25,8 @@ const Login = () => {
   const [errors, setErrors] = useState({});
 
   const [state, dispatch] = useStateValue();
+
+  // console.log(state);
 
   const handleChange = (e) => {
     if (e.target.name === "email") {
@@ -35,21 +37,30 @@ const Login = () => {
       setPassword(e.target.value);
     }
   };
-  useEffect(() => {}, [errors]);
+  useEffect(() => {
+    setErrors({});
+    return () => {
+      setErrors({});
+      console.log("clear Error");
+    };
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch({ type: SET_LOADING });
-    setErrors({});
     const myErrors = [];
-    if (checkError(email)) {
-      myErrors.email = "Enter your email";
-    }
-    if (checkError(password)) {
-      myErrors.password = "Enter your password";
-    }
-    setErrors(myErrors);
-
+    // if (checkError(email)) {
+    //   myErrors.email = "Enter your email";
+    // }
+    // if (checkError(password)) {
+    //   myErrors.password = "Enter your password";
+    // }
+    // setErrors(myErrors);
+    // dispatch({ type: CLEAR_LOADING });
+    // console.log(Object.keys(myErrors));
+    // if (Object.keys(myErrors).length === 0) {
+    // console.log("error occured");
+    dispatch({ type: SET_LOADING });
     auth
       .signInWithEmailAndPassword(email, password)
       .then((res) => {
@@ -72,6 +83,7 @@ const Login = () => {
           setErrors(myErrors);
         }
       });
+    // }
   };
   return (
     <div className="col-10 col-md-5 mx-auto signup text-center">
@@ -94,6 +106,7 @@ const Login = () => {
               className="form-control"
               name="email"
               onChange={handleChange}
+              required
             ></input>
             {errors.email && (
               <small
@@ -118,6 +131,7 @@ const Login = () => {
               className="form-control"
               name="password"
               onChange={handleChange}
+              required
             ></input>
             {errors.password && (
               <small

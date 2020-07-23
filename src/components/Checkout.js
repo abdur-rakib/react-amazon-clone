@@ -67,7 +67,7 @@ const Checkout = (props) => {
               {state.basket.map((item) => (
                 <div
                   key={item.key}
-                  className="cart__item d-flex justify-content-between"
+                  className="cart__item  d-flex justify-content-between py-3"
                 >
                   <div className="col-2 d-flex py-5">
                     <img
@@ -122,18 +122,17 @@ const Checkout = (props) => {
               ))}
             </div>
           </div>
-          <div
-            className="col-md-4 cart__items bg-white ml-lg-4 ml-md-4 ml-sm-0"
-            style={{ height: "230px" }}
-          >
-            <CheckoutSummary basket={state.basket} />
-            <div className="mt-2 text-center">
-              <button
-                style={{ fontSize: "1.5rem" }}
-                className="cart__btn mt-5 px-5 py-3"
-              >
-                Go to shipping
-              </button>
+          <div className="col-md-4  ml-lg-4 ml-md-4 ml-sm-0">
+            <div className="cart__items bg-white">
+              <CheckoutSummary basket={state.basket} />
+              <div className="mt-2 text-center">
+                <button
+                  style={{ fontSize: "1.5rem" }}
+                  className="cart__btn  px-5 py-3"
+                >
+                  Go to shipping
+                </button>
+              </div>
             </div>
           </div>
         </div>

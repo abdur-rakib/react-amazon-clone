@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Signup.css";
 import { Link } from "react-router-dom";
 import { BsExclamation } from "react-icons/bs";
@@ -13,18 +13,18 @@ import {
 import { useStateValue } from "../../context/StateProvider";
 import Spinner from "react-bootstrap/Spinner";
 
-const checkError = (text) => {
-  if (text.trim() === "") {
-    return true;
-  }
-  return false;
-};
+// const checkError = (text) => {
+//   if (text.trim() === "") {
+//     return true;
+//   }
+//   return false;
+// };
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  // const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
 
   const [state, dispatch] = useStateValue();
@@ -39,29 +39,31 @@ const Signup = () => {
     if (e.target.name === "password") {
       setPassword(e.target.value);
     }
-    if (e.target.name === "confirmPassword") {
-      setConfirmPassword(e.target.value);
-    }
+    // if (e.target.name === "confirmPassword") {
+    //   setConfirmPassword(e.target.value);
+    // }
   };
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch({ type: SET_LOADING });
-    setErrors({});
-    const errors = [];
-    if (checkError(email)) {
-      errors.email = "Enter your email";
-    }
-    if (checkError(name)) {
-      errors.name = "Enter your name";
-    }
-    if (checkError(password)) {
-      errors.password = "Enter your password";
-    }
-    if (password !== confirmPassword) {
-      errors.match = "Password doesn't match";
-    }
-    setErrors(errors);
-
+    const myErrors = [];
+    // if (checkError(email)) {
+    //   errors.email = "Enter your email";
+    // }
+    // if (checkError(name)) {
+    //   errors.name = "Enter your name";
+    // }
+    // if (checkError(password)) {
+    //   errors.password = "Enter your password";
+    // }
+    // if (password !== confirmPassword) {
+    //   myErrors.match = "Password doesn't match";
+    //   setErrors(myErrors);
+    //   dispatch({ type: CLEAR_LOADING });
+    // }
+    // if (myErrors) {
+    //   return;
+    // }
     // signup
     auth
       .createUserWithEmailAndPassword(email, password)
@@ -71,7 +73,7 @@ const Signup = () => {
             displayName: name,
           })
           .then(() => {
-            console.log(res.user);
+            // console.log(res.user);
             dispatch({
               type: CREATE_USER,
               user: {
@@ -86,13 +88,25 @@ const Signup = () => {
           });
       })
       .catch((err) => {
+        console.log(err);
         dispatch({ type: CLEAR_LOADING });
         if (err.code === "auth/invalid-email") {
-          errors.email = err.message;
-          setErrors(errors);
+          myErrors.email = err.message;
         }
+        if (err.code === "auth/email-already-in-use") {
+          myErrors.email = err.message;
+        }
+        setErrors(myErrors);
       });
   };
+
+  useEffect(() => {
+    setErrors({});
+    return () => {
+      setErrors({});
+      console.log("clear Error");
+    };
+  }, []);
   return (
     <div className="col-10 col-md-5 mx-auto signup text-center">
       <Link to="/" className="">
@@ -114,6 +128,7 @@ const Signup = () => {
               className="form-control"
               name="name"
               onChange={handleChange}
+              required
             ></input>
             {errors.name && (
               <small
@@ -138,6 +153,7 @@ const Signup = () => {
               className="form-control"
               name="email"
               onChange={handleChange}
+              required
             ></input>
             {errors.email && (
               <small
@@ -163,6 +179,7 @@ const Signup = () => {
               placeholder="At least 6 characters"
               name="password"
               onChange={handleChange}
+              required
             ></input>
             {errors.password ? (
               <small
@@ -190,30 +207,7 @@ const Signup = () => {
               </small>
             )}
           </div>
-          <div className="form-group">
-            <label htmlFor="email" className="font-weight-bold">
-              Re-enter password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              name="confirmPassword"
-              onChange={handleChange}
-            ></input>
-            {errors.match && (
-              <small
-                id="emailHelp"
-                className="form-text font-weight-bold text-danger"
-              >
-                <BsExclamation
-                  size={20}
-                  color="red"
-                  style={{ marginLeft: "-7px" }}
-                />
-                {errors.match}
-              </small>
-            )}
-          </div>
+
           <button className="submitBtn" disabled={state.loading}>
             <Spinner
               as="span"
