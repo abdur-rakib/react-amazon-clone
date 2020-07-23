@@ -174,6 +174,9 @@ const Login = () => {
           <Link className="category__explore" to="/signup">
             Sign-up
           </Link>
+          <Link className="category__explore float-right" to="/reset">
+            Forget password
+          </Link>
         </p>
       </div>
     </div>

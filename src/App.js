@@ -21,6 +21,7 @@ import {
   SET_CART_LENGTH,
 } from "./context/types";
 import Profile from "./components/Profile/Profile";
+import ResetPassword from "./components/ResetPassword";
 
 const App = () => {
   const [state, dispatch] = useStateValue();
@@ -81,6 +82,7 @@ const App = () => {
           <Route exact path="/:category/:id" component={ProductDetails} />
 
           <Route exact path="/profile" component={Profile} />
+          <Route exact path="/reset" component={ResetPassword} />
         </Switch>
       </div>
     </BrowserRouter>
