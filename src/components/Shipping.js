@@ -15,11 +15,19 @@ const Shipping = (props) => {
     dispatch({ type: SET_LOADING });
     dispatch({
       type: SET_SHIPPING,
-      payload: { name: state.user.name, address, city, country, postalcode },
+      payload: {
+        name: state.user ? state.user.name : "Mr. Unknown",
+        address,
+        city,
+        country,
+        postalcode,
+      },
     });
     dispatch({ type: CLEAR_LOADING });
     props.history.push("/payment");
   };
+
+  const name = state.user ? state.user.name : "Mr. Unknown";
 
   return (
     <div>
@@ -35,7 +43,7 @@ const Shipping = (props) => {
               type="text"
               className="form-control"
               name="name"
-              defaultValue={state.user.name}
+              defaultValue={name}
               readOnly
               required
             ></input>

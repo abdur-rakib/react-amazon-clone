@@ -26,9 +26,11 @@ import ChangePassword from "./components/ChangePassword";
 import Shipping from "./components/Shipping";
 import Payment from "./components/Payment";
 import Placeorder from "./components/Placeorder";
+import Success from "./components/Success";
 
 const App = () => {
   const [state, dispatch] = useStateValue();
+  console.log(state);
 
   useEffect(() => {
     auth.onAuthStateChanged((userAuth) => {
@@ -65,6 +67,13 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={home} />
 
+          {/* <Route
+            exact
+            path="/"
+            render={() =>
+              !state.authenticated ? <Redirect to="/login" /> : <home />
+            }
+          /> */}
           <Route
             exact
             path="/signup"
@@ -91,9 +100,11 @@ const App = () => {
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/reset" component={ResetPassword} />
           <Route exact path="/change" component={ChangePassword} />
+
           <Route exact path="/shipping" component={Shipping} />
           <Route exact path="/payment" component={Payment} />
           <Route exact path="/placeorder" component={Placeorder} />
+          <Route exact path="/success" component={Success} />
         </Switch>
       </div>
     </BrowserRouter>

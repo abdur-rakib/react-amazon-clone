@@ -13,7 +13,6 @@ const Header = () => {
   const [state, dispatch] = useStateValue();
   const [search, setSearch] = useState("");
   const [filteredData, setFilterData] = useState([]);
-  console.log(filteredData);
   const handleChange = (e) => {
     setSearch(e.target.value);
     // eslint-disable-next-line
@@ -38,8 +37,8 @@ const Header = () => {
     search.length !== 0 ? (
       filteredData.length !== 0 ? (
         <ul className="list-group">
-          {filteredData.map((data) => (
-            <li className="list-group-item">
+          {filteredData.map((data, index) => (
+            <li className="list-group-item" key={index}>
               <Link to={`/${data.category}/${data.key}`}>{data.name}</Link>
             </li>
           ))}
@@ -70,6 +69,7 @@ const Header = () => {
           aria-label="Search"
           name="search"
           onChange={handleChange}
+          autoComplete="off"
         ></input>
         <button className="btn search__btn">
           <BsSearch size={40} className="header__searchIcon" />

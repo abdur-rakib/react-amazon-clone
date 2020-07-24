@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "./Header/Header";
 import { useStateValue } from "../context/StateProvider";
 import Spinner from "react-bootstrap/Spinner";
-import { SET_LOADING, SET_PAYMENT } from "../context/types";
+import { SET_PAYMENT } from "../context/types";
 
 const Payment = (props) => {
   const [paymentmethod, setPaymentmethod] = useState("");
@@ -11,7 +11,6 @@ const Payment = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch({ type: SET_LOADING });
     dispatch({ type: SET_PAYMENT, payload: paymentmethod });
 
     props.history.push("/placeorder");

@@ -3,13 +3,25 @@ import Header from "./Header/Header";
 import { useStateValue } from "../context/StateProvider";
 import CheckoutSummary from "./CheckoutSummary";
 import { Link } from "react-router-dom";
+import { db } from "../firebase/utils";
+import { CLEAR_LOADING } from "../context/types";
 
 const Placeorder = (props) => {
-  const [state] = useStateValue();
+  const [state, dispatch] = useStateValue();
 
   if (Object.keys(state.shipping).length === 0) {
     props.history.push("/shipping");
   }
+  const deleteCart = () => {
+    db.collection("cart")
+      .get()
+      .then((res) => {
+        res.forEach((doc) => {
+          doc.ref.delete();
+        });
+        dispatch({ type: CLEAR_LOADING });
+      });
+  };
   return (
     <div>
       <Header />
@@ -48,7 +60,7 @@ const Placeorder = (props) => {
           <div className="col-md-5">
             <CheckoutSummary basket={state.basket} />
             <div className="text-center">
-              <Link to="/success">
+              <Link to="/success" onClick={deleteCart}>
                 <button
                   style={{ fontSize: "1.5rem" }}
                   className="cart__btn  px-5 py-3"
