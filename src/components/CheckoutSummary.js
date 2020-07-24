@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const CheckoutSummary = (props) => {
   const [subtotal, setSubtotal] = useState(0);
+  const [shipping, setShipping] = useState(0);
   useEffect(() => {
     const { basket } = props;
     const calcSubtotal = (basket) => {
@@ -11,8 +12,9 @@ const CheckoutSummary = (props) => {
       });
       return sum.toFixed(2);
     };
-
     setSubtotal(calcSubtotal(basket));
+    const shippingCost = subtotal > 100 ? 20 : 50;
+    setShipping(shippingCost);
   }, [props, subtotal]);
   return (
     <div className="py-4 px-5">
@@ -24,16 +26,13 @@ const CheckoutSummary = (props) => {
       </div>
       <div className="d-flex justify-content-between border-bottom my-3">
         <h4>Shipping</h4>
-        <h4>50 $</h4>
+        <h4>{shipping} $</h4>
       </div>
-      <div className="d-flex justify-content-between border-bottom my-3">
-        <h4>Total</h4>
-        <h4>{(parseFloat(subtotal) + 50).toFixed(2)} $</h4>
-      </div>
+
       <div className="d-flex justify-content-between my-3">
         <h4 className="font-weight-bold">Payable total</h4>
         <h4 className="font-weight-bold">
-          {(parseFloat(subtotal) + 50).toFixed(2)} $
+          {(parseFloat(subtotal) + parseFloat(shipping)).toFixed(2)} $
         </h4>
       </div>
     </div>

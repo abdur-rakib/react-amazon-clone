@@ -126,12 +126,14 @@ const Checkout = (props) => {
             <div className="cart__items bg-white">
               <CheckoutSummary basket={state.basket} />
               <div className="mt-2 text-center">
-                <button
-                  style={{ fontSize: "1.5rem" }}
-                  className="cart__btn  px-5 py-3"
-                >
-                  Go to shipping
-                </button>
+                <Link to="/shipping">
+                  <button
+                    style={{ fontSize: "1.5rem" }}
+                    className="cart__btn  px-5 py-3"
+                  >
+                    Go to shipping
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

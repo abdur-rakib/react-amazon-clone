@@ -10,6 +10,15 @@ import reducer from "./context/reducer";
 // Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
 
+// import { useSelector } from "react-redux";
+// import { isLoaded } from "react-redux-firebase";
+
+// const AuthIsLoaded = ({ children }) => {
+//   const auth = useSelector((state) => state.firebase.auth);
+//   if (!isLoaded(auth)) return;
+//   return children;
+// };
+
 ReactDOM.render(
   <StateProvider initialState={initialState} reducer={reducer}>
     <App />

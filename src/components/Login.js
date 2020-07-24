@@ -19,7 +19,7 @@ import Spinner from "react-bootstrap/Spinner";
 //   return false;
 // };
 
-const Login = () => {
+const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -27,6 +27,10 @@ const Login = () => {
   const [state, dispatch] = useStateValue();
 
   // console.log(state);
+
+  // const redirect = props.location.search
+  //   ? props.location.search.split("=")[1]
+  //   : "/profile";
 
   const handleChange = (e) => {
     if (e.target.name === "email") {
@@ -38,6 +42,9 @@ const Login = () => {
     }
   };
   useEffect(() => {
+    // if (state.authenticated) {
+    //   props.history.push(redirect);
+    // }
     setErrors({});
     return () => {
       setErrors({});

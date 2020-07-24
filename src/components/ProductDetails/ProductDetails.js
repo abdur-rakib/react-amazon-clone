@@ -49,6 +49,7 @@ const ProductDetails = (props) => {
             .set({
               ...product,
               count: 1,
+              createdAt: new Date().toISOString(),
             })
             .then(() => {
               dispatch({ type: CLEAR_LOADING });

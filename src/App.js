@@ -22,6 +22,10 @@ import {
 } from "./context/types";
 import Profile from "./components/Profile/Profile";
 import ResetPassword from "./components/ResetPassword";
+import ChangePassword from "./components/ChangePassword";
+import Shipping from "./components/Shipping";
+import Payment from "./components/Payment";
+import Placeorder from "./components/Placeorder";
 
 const App = () => {
   const [state, dispatch] = useStateValue();
@@ -38,19 +42,21 @@ const App = () => {
         dispatch({ type: SET_LOGOUT });
       }
     });
-    db.collection("cart").onSnapshot((snapshot) => {
-      let cartItems = [];
-      // eslint-disable-next-line
-      snapshot.docs.map((doc) => {
-        cartItems.push(doc.data());
+    db.collection("cart")
+      .orderBy("createdAt", "desc")
+      .onSnapshot((snapshot) => {
+        let cartItems = [];
+        // eslint-disable-next-line
+        snapshot.docs.map((doc) => {
+          cartItems.push(doc.data());
+        });
+        dispatch({ type: GET_CART, payload: cartItems });
+        let sum = 0;
+        cartItems.forEach((item) => {
+          sum += item.count;
+        });
+        dispatch({ type: SET_CART_LENGTH, payload: sum });
       });
-      dispatch({ type: GET_CART, payload: cartItems });
-      let sum = 0;
-      cartItems.forEach((item) => {
-        sum += item.count;
-      });
-      dispatch({ type: SET_CART_LENGTH, payload: sum });
-    });
     // eslint-disable-next-line
   }, []);
   return (
@@ -73,6 +79,7 @@ const App = () => {
               state.authenticated ? <Redirect to="/profile" /> : <Login />
             }
           />
+          {/* <Route exact path="/login" component={Login} /> */}
           <Route exact path="/checkout" component={Checkout} />
           {/* Category Route */}
           <Route exact path="/android" component={Android} />
@@ -83,6 +90,10 @@ const App = () => {
 
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/reset" component={ResetPassword} />
+          <Route exact path="/change" component={ChangePassword} />
+          <Route exact path="/shipping" component={Shipping} />
+          <Route exact path="/payment" component={Payment} />
+          <Route exact path="/placeorder" component={Placeorder} />
         </Switch>
       </div>
     </BrowserRouter>

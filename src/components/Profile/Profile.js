@@ -51,18 +51,23 @@ const Profile = () => {
       </Modal>
 
       {state.user ? (
-        <div className="d-flex justify-content-center align-items-center mt-5">
-          <h1 className="font-weight-bold text-uppercase pt-3">
-            {state.user.name}{" "}
-          </h1>
-          <AiOutlineLogout
-            className="ml-3"
-            onClick={() => setShow(true)}
-            size={32}
-            color="#e67a00"
-            style={{ cursor: "pointer" }}
-          />
-        </div>
+        <>
+          <div className="d-flex justify-content-center align-items-center mt-5">
+            <h1 className="font-weight-bold text-uppercase pt-3">
+              {state.user.name}{" "}
+            </h1>
+            <AiOutlineLogout
+              className="ml-3"
+              onClick={() => setShow(true)}
+              size={32}
+              color="#e67a00"
+              style={{ cursor: "pointer" }}
+            />
+          </div>
+          <h3 className="text-center mt-2">
+            <Link to="/change">Change password</Link>
+          </h3>
+        </>
       ) : (
         <ClockLoader color="#e67a00" size={50} css={override} />
       )}

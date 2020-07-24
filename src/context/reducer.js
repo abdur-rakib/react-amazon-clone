@@ -8,15 +8,21 @@ import {
   CLEAR_LOADING,
   SET_LOADING,
   SET_SEARCHTEXT,
+  SET_SHIPPING,
+  SET_PAYMENT,
 } from "./types";
 
 export const initialState = {
   basket: [],
-  user: null,
+  user: {
+    name: "",
+  },
   authenticated: false,
   cartLength: 0,
   loading: false,
   search: "",
+  shipping: {},
+  payment: "",
 };
 
 // reducer
@@ -70,6 +76,16 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         search: action.payload,
+      };
+    case SET_SHIPPING:
+      return {
+        ...state,
+        shipping: action.payload,
+      };
+    case SET_PAYMENT:
+      return {
+        ...state,
+        payment: action.payload,
       };
     default:
       return state;

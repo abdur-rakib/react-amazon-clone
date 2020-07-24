@@ -8,3 +8,5 @@ export const SET_CART_LENGTH = "SET_CART_LENGTH";
 export const SET_LOADING = "SET_LOADING";
 export const CLEAR_LOADING = "CLEAR_LOADING";
 export const SET_SEARCHTEXT = "SET_SEARCHTEXT";
+export const SET_SHIPPING = "SET_SHIPPING";
+export const SET_PAYMENT = "SET_PAYMENT";
