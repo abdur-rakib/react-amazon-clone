@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 const Placeorder = (props) => {
   const [state] = useStateValue();
-  console.log(state);
 
   if (Object.keys(state.shipping).length === 0) {
     props.history.push("/shipping");
@@ -49,7 +48,7 @@ const Placeorder = (props) => {
           <div className="col-md-5">
             <CheckoutSummary basket={state.basket} />
             <div className="text-center">
-              <Link to="/shipping">
+              <Link to="/success">
                 <button
                   style={{ fontSize: "1.5rem" }}
                   className="cart__btn  px-5 py-3"

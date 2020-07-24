@@ -133,3 +133,10 @@ small {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   margin-top: 90px;
 }
+
+.suggestion {
+  position: absolute;
+  z-index: 100;
+  width: 97%;
+  top: 44px;
+}
