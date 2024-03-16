@@ -1,0 +1,135 @@
+{
+  "uuid": "56cbd4e9-b2d4-48a3-ae02-f5b34d78222e",
+  "lastMigration": 32,
+  "name": "Sb partner api mock",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3000,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "f6bc2ce0-474f-40a4-af99-5054dd1238f2",
+      "type": "http",
+      "documentation": "",
+      "method": "put",
+      "endpoint": "v1/subscribe",
+      "responses": [
+        {
+          "uuid": "c630bbde-0aee-4e76-9cf9-ee30a698d72f",
+          "body": "{\n  \"phoneNumber\": \"+8801766258649\",\n  \"planCode\": \"GPAPI30DAYS\",\n  \"externalUserId\": \"c4f33e7e-aa91-4da8-ad47-b47c9ee0b37f\",\n  \"countryCode\": \"BD\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "z745",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "d48cee80-25f2-481b-8a3c-e42615241bc8",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "api/v1/integration/sb",
+      "responses": [
+        {
+          "uuid": "c1d9704a-3f4a-475d-8bcc-2c0b632ea808",
+          "body": "{\n  \"phoneNumber\": \"+8801711471428\",\n  \"planCode\": \"GPOCISCREENP4\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "DATABUCKET",
+          "filePath": "",
+          "databucketID": "1voc",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "f6bc2ce0-474f-40a4-af99-5054dd1238f2"
+    },
+    {
+      "type": "route",
+      "uuid": "d48cee80-25f2-481b-8a3c-e42615241bc8"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [
+    {
+      "uuid": "8a609514-36e3-4263-a10b-e22316ae1dca",
+      "id": "z745",
+      "name": "Hoichoi Response Data",
+      "documentation": "",
+      "value": "{\n    \"endDate\": \"2024-04-15T08:24:17.103Z\",\n    \"id\": \"fc4b5f6c-ddd7-4445-a329-a0886c6f7e07\",\n    \"phoneNumber\": \"+8801766258649\",\n    \"planCode\": \"GPAPI30DAYS\",\n    \"requestId\": \"7b32701f-54f4-464a-8eac-e45cf088e1c6\",\n    \"startDate\": \"2024-03-16T08:24:17.103Z\",\n    \"status\": \"COMPLETED\",\n    \"userId\": \"fc4b5f6c-ddd7-4445-a329-a0886c6f7e07\"\n}"
+    },
+    {
+      "uuid": "967377d5-903d-4e91-8297-c0ffbbab751f",
+      "id": "whkz",
+      "name": "Bioscope Response Data",
+      "documentation": "",
+      "value": "{\n    \"message\": \"Activated Successfully.\",\n    \"transactionID\": \"60cae24a-299b-4f9c-b3d0-a10548ea690f\"\n}"
+    },
+    {
+      "uuid": "efcdcd95-e91f-4785-80fc-b682bbaf8959",
+      "id": "1voc",
+      "name": "IScreen Response Data",
+      "documentation": "",
+      "value": "{\n    \"code\": 10200,\n    \"data\": {\n    \"expireDate\": \"2024-04-14\",\n    \"phoneNumber\": \"+8801711471428\"\n    },\n    \"message\": \"Success\"\n}"
+    }
+  ],
+  "callbacks": []
+}
